@@ -186,7 +186,10 @@ namespace PlayerControl
         
         public void ReplaceRotateActivation()
         {
-            placementObject.Rotate();
+            if (placementObject  != null)
+            {
+                placementObject.Rotate();
+            }
         }
 
         private void ActiveOn()

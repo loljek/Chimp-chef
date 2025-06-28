@@ -9,6 +9,7 @@ namespace InteractableObjects
         [SerializeField] private PlacementObject objectModel;
         [SerializeField] private Material good;
         [SerializeField] private Material bad;
+        [SerializeField] public bool isBox;
         private PlacementObject replaceObject;
         private Transform replaceTrans;
         private Transform trans;
@@ -18,12 +19,14 @@ namespace InteractableObjects
         private bool isOnPlace;
         public bool isReady;
         private bool isBadMaterial;
-        private float objectPos;
         
         private void Awake()
         {
             interactSpace = GetComponent<BoxCollider>();
-            objectPos = transform.position.y;
+            if (objectModel != null)
+            {
+                objectModel = GetComponent<PlacementObject>();
+            }
         }
 
         private void Update()
@@ -47,9 +50,11 @@ namespace InteractableObjects
 
         public void ReplaceStart (Transform pos)
         {
+            if (objectModel == null) return;
             trans = pos;
-            place = objectModel.GetCurPlace();
-            replaceObject = Instantiate(objectModel, trans.position, objectModel.transform.rotation);
+            place = objectModel?.GetCurPlace();
+            replaceObject = Instantiate(objectModel, trans.position, objectModel!.transform.rotation);
+            replaceObject.gameObject.SetActive(true);
             replaceTrans = replaceObject.GetComponent<Transform>();
             ChangeCollider(replaceTrans, false);
             ChangeMaterial(replaceTrans.gameObject, bad);
@@ -63,7 +68,7 @@ namespace InteractableObjects
             replaceObject = null;
             isReplacing = false;
             isReady = false;
-            curPlace = place;
+            SetCurPlace(null);
         }
 
         public void ReplaceEnd()
@@ -76,28 +81,29 @@ namespace InteractableObjects
             Destroy(replaceObject.gameObject);
             isReplacing = false;
             isReady = false;
+            if (isBox)
+            {
+                objectModel.gameObject.SetActive(true);
+                SetObjectModel(null);
+            }
         }
 
         private void ReplaceGood()
         {
             isReady = true;
-            replaceTrans.position = new Vector3(curPlace.GetPos().x, objectPos, curPlace.GetPos().z);
-            if (isBadMaterial)
-            {
-                ChangeMaterial(replaceTrans.gameObject, good);
-                isBadMaterial = false;
-            }
+            replaceTrans.position = new Vector3(curPlace.GetPos().x, curPlace.GetPos().y, curPlace.GetPos().z);
+            if (!isBadMaterial) return;
+            ChangeMaterial(replaceTrans.gameObject, good);
+            isBadMaterial = false;
         }
         
         private void ReplaceBad()
         {
             replaceTrans.position = trans.position;
             isReady = false;
-            if (!isBadMaterial)
-            {
-                ChangeMaterial(replaceTrans.gameObject, bad);
-                isBadMaterial = true;
-            }
+            if (isBadMaterial) return;
+            ChangeMaterial(replaceTrans.gameObject, bad);
+            isBadMaterial = true;
         }
 
         public void Rotate()
@@ -144,14 +150,19 @@ namespace InteractableObjects
             place = p;
         }
 
+        public void SetObjectModel(PlacementObject p)
+        {
+            objectModel = p;
+        }
+        
+        public PlacementObject GetObjectModel()
+        {
+            return objectModel;
+        }
+
         private Place GetCurPlace()
         {
             return curPlace;
-        }
-
-        private void ChangeIsReplacing()
-        {
-            isReplacing = !isReplacing;
         }
         
         public override void Interaction()

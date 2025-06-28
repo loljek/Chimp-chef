@@ -20,6 +20,7 @@ namespace PlayerControl
         private Rigidbody rb;
         private float yRotation;
         private float xRotation;
+        public bool isActive = true;
 
         private void Awake()
         {
@@ -37,23 +38,29 @@ namespace PlayerControl
 
         private void Update()
         {
-            yRotation += playerInput.Player.MouseDelta.ReadValue<Vector2>().x * sensitivity;
-            xRotation -= playerInput.Player.MouseDelta.ReadValue<Vector2>().y * sensitivity;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-            RotateCharacter();
+            if (isActive)
+            {
+                yRotation += playerInput.Player.MouseDelta.ReadValue<Vector2>().x * sensitivity;
+                xRotation -= playerInput.Player.MouseDelta.ReadValue<Vector2>().y * sensitivity;
+                xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+                RotateCharacter();
+            }
         }
 
         private void FixedUpdate()
         {
-            ReadMovement();
-            movementVector = (inputVector.x * transform.right + inputVector.y * transform.forward).normalized;
-            if (playerInput.Player.Run.IsPressed())
+            if (isActive)
             {
-                rb.MovePosition(transform.position + movementVector * (moveSpeed * moveSpeedMult * Time.fixedDeltaTime));
-            }
-            else
-            {
-                rb.MovePosition(transform.position + movementVector * (moveSpeed * Time.fixedDeltaTime));
+                ReadMovement();
+                movementVector = (inputVector.x * transform.right + inputVector.y * transform.forward).normalized;
+                if (playerInput.Player.Run.IsPressed() & grChecker.isGrounded)
+                {
+                    rb.MovePosition(transform.position + movementVector * (moveSpeed * moveSpeedMult * Time.fixedDeltaTime));
+                }
+                else
+                {
+                    rb.MovePosition(transform.position + movementVector * (moveSpeed * Time.fixedDeltaTime));
+                }
             }
         }
 

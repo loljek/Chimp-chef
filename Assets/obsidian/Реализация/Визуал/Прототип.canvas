@@ -14,7 +14,9 @@
 		{"id":"86c882b45a7bfef4","type":"file","file":"видео/тестирование/Test_001.webm","x":-4940,"y":-1537,"width":400,"height":252},
 		{"id":"aba1fadc3b0781d5","type":"file","file":"Реализация/Код/Управление.md","x":-5680,"y":-1537,"width":520,"height":603,"color":"4"},
 		{"id":"4a8fe6c6f583b579","type":"file","file":"Реализация/Код/Взаимодействие с объектами.md","x":-4300,"y":-1537,"width":520,"height":603,"color":"4"},
-		{"id":"0f5e87048980d59f","type":"text","text":"#визуал","x":-6080,"y":-3680,"width":140,"height":50}
+		{"id":"0f5e87048980d59f","type":"text","text":"#визуал","x":-6080,"y":-3680,"width":140,"height":50},
+		{"id":"554d13052a44816f","x":-5680,"y":-740,"width":400,"height":225,"type":"file","file":"видео/тестирование/Test_003.webm"},
+		{"id":"da478e6c73db3acc","x":-6400,"y":-780,"width":520,"height":603,"color":"4","type":"file","file":"Реализация/Код/Магазин.md"}
 	],
 	"edges":[
 		{"id":"f916726e3e0b2a6c","fromNode":"e504f46566b4f72b","fromSide":"bottom","toNode":"61c2f6b1e1a3e817","toSide":"top"},
@@ -24,6 +26,8 @@
 		{"id":"7f39403ec1209317","fromNode":"a281bbbcaae90dbb","fromSide":"bottom","toNode":"86c882b45a7bfef4","toSide":"top"},
 		{"id":"8d477220dd7a5394","fromNode":"86c882b45a7bfef4","fromSide":"bottom","toNode":"9b242c265825682e","toSide":"top"},
 		{"id":"3bed624cf994e4bc","fromNode":"aba1fadc3b0781d5","fromSide":"right","toNode":"86c882b45a7bfef4","toSide":"left"},
-		{"id":"0d3259eef9724b7a","fromNode":"4a8fe6c6f583b579","fromSide":"left","toNode":"9b242c265825682e","toSide":"right"}
+		{"id":"0d3259eef9724b7a","fromNode":"4a8fe6c6f583b579","fromSide":"left","toNode":"9b242c265825682e","toSide":"right"},
+		{"id":"56d27d74aa8b655e","fromNode":"9b242c265825682e","fromSide":"bottom","toNode":"554d13052a44816f","toSide":"top"},
+		{"id":"06a2fcf450409ae7","fromNode":"da478e6c73db3acc","fromSide":"right","toNode":"554d13052a44816f","toSide":"left"}
 	]
 }

@@ -30,6 +30,7 @@ namespace InteractableObjects.DefaultObjects
             transform.rotation = openDirection;
             isOpening = false;
         }
+        
         public override void Interaction()
         {
             if (isOpen)
