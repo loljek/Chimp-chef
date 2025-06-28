@@ -135,6 +135,42 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InHandInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""1cb17deb-a876-4aa3-ae99-73a21607150f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DropHandInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""fed33152-0179-4eb4-9c38-549df761a011"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Replace"",
+                    ""type"": ""Button"",
+                    ""id"": ""a63ab085-7ac1-479e-a8bc-d1399bd250e7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReplaceRotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""2c44f1b7-1ce7-4542-9212-68541af0bae7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -236,6 +272,50 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bde1b4b-cdcd-469e-ad73-918680992596"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InHandInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa46a390-bb24-44af-aec6-77dde6437b95"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DropHandInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43d1b757-c37c-4df3-9bbf-cf71751ebd7b"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Replace"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33195622-7f55-45f8-9487-f97dc01802b7"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReplaceRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -266,6 +346,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_MouseDelta = m_Player.FindAction("MouseDelta", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
+        m_Player_InHandInteraction = m_Player.FindAction("InHandInteraction", throwIfNotFound: true);
+        m_Player_DropHandInteraction = m_Player.FindAction("DropHandInteraction", throwIfNotFound: true);
+        m_Player_Replace = m_Player.FindAction("Replace", throwIfNotFound: true);
+        m_Player_ReplaceRotate = m_Player.FindAction("ReplaceRotate", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -351,6 +435,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MouseDelta;
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Interaction;
+    private readonly InputAction m_Player_InHandInteraction;
+    private readonly InputAction m_Player_DropHandInteraction;
+    private readonly InputAction m_Player_Replace;
+    private readonly InputAction m_Player_ReplaceRotate;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -382,6 +470,22 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Interaction".
         /// </summary>
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/InHandInteraction".
+        /// </summary>
+        public InputAction @InHandInteraction => m_Wrapper.m_Player_InHandInteraction;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DropHandInteraction".
+        /// </summary>
+        public InputAction @DropHandInteraction => m_Wrapper.m_Player_DropHandInteraction;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Replace".
+        /// </summary>
+        public InputAction @Replace => m_Wrapper.m_Player_Replace;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ReplaceRotate".
+        /// </summary>
+        public InputAction @ReplaceRotate => m_Wrapper.m_Player_ReplaceRotate;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -423,6 +527,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
+            @InHandInteraction.started += instance.OnInHandInteraction;
+            @InHandInteraction.performed += instance.OnInHandInteraction;
+            @InHandInteraction.canceled += instance.OnInHandInteraction;
+            @DropHandInteraction.started += instance.OnDropHandInteraction;
+            @DropHandInteraction.performed += instance.OnDropHandInteraction;
+            @DropHandInteraction.canceled += instance.OnDropHandInteraction;
+            @Replace.started += instance.OnReplace;
+            @Replace.performed += instance.OnReplace;
+            @Replace.canceled += instance.OnReplace;
+            @ReplaceRotate.started += instance.OnReplaceRotate;
+            @ReplaceRotate.performed += instance.OnReplaceRotate;
+            @ReplaceRotate.canceled += instance.OnReplaceRotate;
         }
 
         /// <summary>
@@ -449,6 +565,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
+            @InHandInteraction.started -= instance.OnInHandInteraction;
+            @InHandInteraction.performed -= instance.OnInHandInteraction;
+            @InHandInteraction.canceled -= instance.OnInHandInteraction;
+            @DropHandInteraction.started -= instance.OnDropHandInteraction;
+            @DropHandInteraction.performed -= instance.OnDropHandInteraction;
+            @DropHandInteraction.canceled -= instance.OnDropHandInteraction;
+            @Replace.started -= instance.OnReplace;
+            @Replace.performed -= instance.OnReplace;
+            @Replace.canceled -= instance.OnReplace;
+            @ReplaceRotate.started -= instance.OnReplaceRotate;
+            @ReplaceRotate.performed -= instance.OnReplaceRotate;
+            @ReplaceRotate.canceled -= instance.OnReplaceRotate;
         }
 
         /// <summary>
@@ -537,5 +665,33 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteraction(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "InHandInteraction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInHandInteraction(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DropHandInteraction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDropHandInteraction(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Replace" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnReplace(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ReplaceRotate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnReplaceRotate(InputAction.CallbackContext context);
     }
 }

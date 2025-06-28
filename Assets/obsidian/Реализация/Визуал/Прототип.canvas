@@ -1,0 +1,29 @@
+{
+	"nodes":[
+		{"id":"59b638cb24e8fa81","type":"text","text":"референсы","x":-1525,"y":-2120,"width":165,"height":50},
+		{"id":"e504f46566b4f72b","type":"text","text":"прицел","x":235,"y":-1920,"width":122,"height":50},
+		{"id":"61c2f6b1e1a3e817","type":"file","file":"картинки/UI/aim(still).png","x":226,"y":-1780,"width":140,"height":140},
+		{"id":"9e511b6f7912face","type":"file","file":"картинки/UI/aim(active).png","x":221,"y":-1580,"width":150,"height":150},
+		{"id":"15d56ab4674d7c1a","type":"file","file":"картинки/текстуры/texture_test.png","x":-520,"y":-1955,"width":85,"height":85},
+		{"id":"533e3c87c94ed92a","type":"text","text":"   текстуры","x":-320,"y":-2120,"width":175,"height":50},
+		{"id":"ed1fd3c17e80efa7","type":"text","text":"UI","x":480,"y":-2120,"width":80,"height":50},
+		{"id":"4c7dbaba60c6fe89","type":"file","file":"картинки/референсы/Макаки.png","x":-2060,"y":-1752,"width":400,"height":225},
+		{"id":"257c0d0298f83d4f","type":"text","text":"плейсхолдеры","x":-4100,"y":-2130,"width":175,"height":50},
+		{"id":"a281bbbcaae90dbb","type":"file","file":"картинки/плейсхолдеры/первый тест.bmp","x":-5077,"y":-2010,"width":675,"height":300},
+		{"id":"9b242c265825682e","type":"file","file":"видео/тестирование/Test_002.webm","x":-4940,"y":-1170,"width":400,"height":236},
+		{"id":"86c882b45a7bfef4","type":"file","file":"видео/тестирование/Test_001.webm","x":-4940,"y":-1537,"width":400,"height":252},
+		{"id":"aba1fadc3b0781d5","type":"file","file":"Реализация/Код/Управление.md","x":-5680,"y":-1537,"width":520,"height":603,"color":"4"},
+		{"id":"4a8fe6c6f583b579","type":"file","file":"Реализация/Код/Взаимодействие с объектами.md","x":-4300,"y":-1537,"width":520,"height":603,"color":"4"},
+		{"id":"0f5e87048980d59f","type":"text","text":"#визуал","x":-6080,"y":-3680,"width":140,"height":50}
+	],
+	"edges":[
+		{"id":"f916726e3e0b2a6c","fromNode":"e504f46566b4f72b","fromSide":"bottom","toNode":"61c2f6b1e1a3e817","toSide":"top"},
+		{"id":"3d8b69bb80aeeb85","fromNode":"ed1fd3c17e80efa7","fromSide":"bottom","toNode":"e504f46566b4f72b","toSide":"top"},
+		{"id":"93c2c4d52c0bbf01","fromNode":"61c2f6b1e1a3e817","fromSide":"bottom","toNode":"9e511b6f7912face","toSide":"top"},
+		{"id":"f2e2953cff85523b","fromNode":"59b638cb24e8fa81","fromSide":"bottom","toNode":"4c7dbaba60c6fe89","toSide":"top"},
+		{"id":"7f39403ec1209317","fromNode":"a281bbbcaae90dbb","fromSide":"bottom","toNode":"86c882b45a7bfef4","toSide":"top"},
+		{"id":"8d477220dd7a5394","fromNode":"86c882b45a7bfef4","fromSide":"bottom","toNode":"9b242c265825682e","toSide":"top"},
+		{"id":"3bed624cf994e4bc","fromNode":"aba1fadc3b0781d5","fromSide":"right","toNode":"86c882b45a7bfef4","toSide":"left"},
+		{"id":"0d3259eef9724b7a","fromNode":"4a8fe6c6f583b579","fromSide":"left","toNode":"9b242c265825682e","toSide":"right"}
+	]
+}

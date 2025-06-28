@@ -1,41 +1,38 @@
 using UnityEngine;
 
-public class GroundChecker : MonoBehaviour
+namespace PlayerControl
 {
-    [SerializeField] BoxCollider groundSpace;
-    public bool isGrounded = false;
-
-    private void Awake()
+    public class GroundChecker : MonoBehaviour
     {
-        groundSpace = GetComponent<BoxCollider>();
-    }
+        public bool isGrounded;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Ground"))
+        private void OnTriggerEnter(Collider other)
         {
-            isGrounded = true;
+            if (other.CompareTag("Ground"))
+            {
+                isGrounded = true;
+            }
         }
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Ground"))
+        private void OnTriggerStay(Collider other)
         {
-            isGrounded = true;
+            if (other.CompareTag("Ground"))
+            {
+                isGrounded = true;
+            }
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Ground"))
+        private void OnTriggerExit(Collider other)
         {
-            isGrounded = false;
+            if (other.CompareTag("Ground"))
+            {
+                isGrounded = false;
+            }
         }
-    }
 
-    public bool isOnGround()
-    {
-        return isGrounded;
+        public bool isOnGround()
+        {
+            return isGrounded;
+        }
     }
 }

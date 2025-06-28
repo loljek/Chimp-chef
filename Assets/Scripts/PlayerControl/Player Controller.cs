@@ -1,93 +1,114 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent (typeof(Rigidbody))]
-[RequireComponent(typeof(InteractionController))]
-[RequireComponent(typeof(GroundChecker))]
-
-
-public class PlayerController : MonoBehaviour
+namespace PlayerControl
 {
-    private GroundChecker grChecker;
-    private InteractionController intController;
-    [SerializeField] float moveSpeed = 5;
-    [SerializeField] float moveSpeedMult = 1.8f;
-    [SerializeField] float jumpForce = 5;
-    [SerializeField] float sensitivity = 1.5f;
-    [SerializeField] float smooth = 10;
-    [SerializeField] new Transform camera;
-    private PlayerInput _playerInput;
-    private Vector3 movementVector;
-    private Vector2 inputVector;
-    private Rigidbody rb;
-    private float yRotation;
-    private float xRotation;
+    [RequireComponent(typeof(Rigidbody))]
 
-    private void Awake()
+    public class PlayerController : MonoBehaviour
     {
-        _playerInput = new PlayerInput();
-        _playerInput.Player.Jump.performed += context => Jump();
-        _playerInput.Player.Interaction.performed += context => InteractionActive();
-        intController = GetComponent<InteractionController>();
-        grChecker = GetComponent<GroundChecker>();
-        rb = GetComponent<Rigidbody>();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+        [SerializeField] private GroundChecker grChecker;
+        [SerializeField] private InteractionController intController;
+        [SerializeField] private float moveSpeed = 5;
+        [SerializeField] private float moveSpeedMult = 1.8f;
+        [SerializeField] private float jumpForce = 5;
+        [SerializeField] private new Transform camera;
+        [SerializeField] private float sensitivity = 1.5f;
+        [SerializeField] private float smooth = 10;
+        private PlayerInput playerInput;
+        private Vector3 movementVector;
+        private Vector2 inputVector;
+        private Rigidbody rb;
+        private float yRotation;
+        private float xRotation;
 
-    private void Update()
-    {
-        yRotation += _playerInput.Player.MouseDelta.ReadValue<Vector2>().x * sensitivity;
-        xRotation -= _playerInput.Player.MouseDelta.ReadValue<Vector2>().y * sensitivity;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        RotateCharacter();
-    }
-
-    private void FixedUpdate()
-    {
-        ReadMovement();
-        movementVector = (inputVector.x * transform.right + inputVector.y * transform.forward).normalized;
-        if (_playerInput.Player.Run.IsPressed())
+        private void Awake()
         {
-            rb.MovePosition(transform.position + movementVector * moveSpeed * moveSpeedMult * Time.fixedDeltaTime);
+            playerInput = new PlayerInput();
+            playerInput.Player.Jump.performed += _ => Jump();
+            playerInput.Player.Interaction.performed += _ => InteractionActive();
+            playerInput.Player.DropHandInteraction.performed += _ => Drop();
+            playerInput.Player.InHandInteraction.performed += _ => InHandInteractionActive();
+            playerInput.Player.Replace.performed += _ => Replace();
+            playerInput.Player.ReplaceRotate.performed += _ => ReplaceRotate();
+            rb = GetComponent<Rigidbody>();
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
-        else 
+
+        private void Update()
         {
-            rb.MovePosition(transform.position + movementVector * moveSpeed * Time.fixedDeltaTime);
+            yRotation += playerInput.Player.MouseDelta.ReadValue<Vector2>().x * sensitivity;
+            xRotation -= playerInput.Player.MouseDelta.ReadValue<Vector2>().y * sensitivity;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            RotateCharacter();
         }
-    }
 
-    private void ReadMovement()
-    {
-        inputVector = _playerInput.Player.Movement.ReadValue<Vector2>();
-    }
-
-    private void RotateCharacter()
-    {
-        camera.rotation = Quaternion.Lerp(camera.rotation, Quaternion.Euler(xRotation, yRotation, 0), Time.deltaTime * smooth);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, yRotation, 0), Time.deltaTime * smooth);
-    }
-
-    private void Jump()
-    { 
-        if (grChecker.isOnGround())
+        private void FixedUpdate()
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            ReadMovement();
+            movementVector = (inputVector.x * transform.right + inputVector.y * transform.forward).normalized;
+            if (playerInput.Player.Run.IsPressed())
+            {
+                rb.MovePosition(transform.position + movementVector * (moveSpeed * moveSpeedMult * Time.fixedDeltaTime));
+            }
+            else
+            {
+                rb.MovePosition(transform.position + movementVector * (moveSpeed * Time.fixedDeltaTime));
+            }
         }
-    }
 
-    private void InteractionActive()
-    {
-        intController.InteractActivation();
-    }
+        private void ReadMovement()
+        {
+            inputVector = playerInput.Player.Movement.ReadValue<Vector2>();
+        }
 
-    private void OnEnable()
-    {
-        _playerInput.Enable();
-    }
+        private void RotateCharacter()
+        {
+            camera.rotation = Quaternion.Lerp(camera.rotation, Quaternion.Euler(xRotation, yRotation, 0), Time.deltaTime * smooth);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, yRotation, 0), Time.deltaTime * smooth);
+        }
 
-    private void OnDisable()
-    {
-        _playerInput.Disable();
+        private void Jump()
+        {
+            if (grChecker.isOnGround())
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+        }
+
+        private void InteractionActive()
+        {
+            intController.InteractActivation();
+        }
+
+        private void Drop()
+        {
+            intController.Drop();
+        }
+
+        private void InHandInteractionActive()
+        {
+            intController.InHandInteractActivation();
+        }
+
+        private void Replace()
+        {
+            intController.ReplaceActivation();
+        }
+
+        private void ReplaceRotate()
+        {
+            intController.ReplaceRotateActivation();
+        }
+
+        public void OnEnable()
+        {
+            playerInput.Enable();
+        }
+
+        public void OnDisable()
+        {
+            playerInput.Disable();
+        }
     }
 }
